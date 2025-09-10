@@ -1,0 +1,123 @@
+months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+# Extract data from the existing DataFrame
+clay_brick = forplot[['Total Heating Energy (kWh) (Clay Brick)', 'Total Cooling Energy (kWh) (Clay Brick)']].sum(axis=1)
+rice_cork = forplot[['Total Heating Energy (kWh) (Rice Cork)', 'Total Cooling Energy (kWh) (Rice Cork)']].sum(axis=1)
+bagasse_ash = forplot[['Total Heating Energy (kWh) (Bagasse Ash Brick)', 'Total Cooling Energy (kWh) (Bagasse Ash Brick)']].sum(axis=1)
+
+x = np.arange(len(months))  # the label locations
+width = 0.3  # the width of the bars
+
+fig, ax = plt.subplots(figsize=(10, 5))
+rects1 = ax.bar(x - width, clay_brick, width, label='Clay Brick (Control)', color='orange')
+rects2 = ax.bar(x, rice_cork, width, label='Rice Cork Wall', color='red')
+rects3 = ax.bar(x + width, bagasse_ash, width, label='Bagasse Ash Brick', color='magenta')
+
+# Labels, title, and custom x-axis tick labels
+ax.set_xlabel('Month')
+ax.set_ylabel('Total Energy Load (kWh)')
+ax.set_title('Monthly Total Energy Load Comparison')
+ax.set_xticks(x)
+ax.set_xticklabels(months)
+ax.legend()
+
+# Show the plot
+plt.show()
+
+-----
+
+months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+# Extract data from the existing DataFrame
+clay_brick = forplot['Total Heating Energy (kWh) (Clay Brick)']
+rice_cork = forplot['Total Heating Energy (kWh) (Rice Cork)']
+bagasse_ash = forplot['Total Heating Energy (kWh) (Bagasse Ash Brick)']
+
+x = np.arange(len(months))  # the label locations
+width = 0.3  # the width of the bars
+
+fig, ax = plt.subplots(figsize=(10, 5))
+rects1 = ax.bar(x - width, clay_brick, width, label='Clay Brick (Control)', color='orange')
+rects2 = ax.bar(x, rice_cork, width, label='Rice Cork Wall', color='red')
+rects3 = ax.bar(x + width, bagasse_ash, width, label='Bagasse Ash Brick', color='magenta')
+
+# Labels, title, and custom x-axis tick labels
+ax.set_xlabel('Month')
+ax.set_ylabel('Total Heating Energy Load (kWh)')
+ax.set_title('Monthly Heating Energy Load Comparison')
+ax.set_xticks(x)
+ax.set_xticklabels(months)
+ax.legend()
+
+# Show the plot
+plt.show()
+
+-----
+
+months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+# Extract data from the existing DataFrame
+clay_brick = forplot['Total Cooling Energy (kWh) (Clay Brick)']
+rice_cork = forplot['Total Cooling Energy (kWh) (Rice Cork)']
+bagasse_ash = forplot['Total Cooling Energy (kWh) (Bagasse Ash Brick)']
+
+x = np.arange(len(months))  # the label locations
+width = 0.3  # the width of the bars
+
+fig, ax = plt.subplots(figsize=(10, 5))
+rects1 = ax.bar(x - width, clay_brick, width, label='Clay Brick (Control)', color='orange')
+rects2 = ax.bar(x, rice_cork, width, label='Rice Cork Wall', color='red')
+rects3 = ax.bar(x + width, bagasse_ash, width, label='Bagasse Ash Brick', color='magenta')
+
+# Labels, title, and custom x-axis tick labels
+ax.set_xlabel('Month')
+ax.set_ylabel('Total Cooling Energy Load (kWh)')
+ax.set_title('Monthly Cooling Energy Load Comparison')
+ax.set_xticks(x)
+ax.set_xticklabels(months)
+ax.legend()
+
+# Show the plot
+plt.show()
+
+-----
+
+clay_brick_total = forplot[['Total Heating Energy (kWh) (Clay Brick)', 'Total Cooling Energy (kWh) (Clay Brick)']].sum().sum()
+rice_cork_total = forplot[['Total Heating Energy (kWh) (Rice Cork)', 'Total Cooling Energy (kWh) (Rice Cork)']].sum().sum()
+bagasse_ash_total = forplot[['Total Heating Energy (kWh) (Bagasse Ash Brick)', 'Total Cooling Energy (kWh) (Bagasse Ash Brick)']].sum().sum()
+
+# Wall types and their corresponding total energy loads
+wall_types = ['Clay Brick', 'Rice Cork Wall', 'Bagasse Ash Brick']
+total_energy = [clay_brick_total, rice_cork_total, bagasse_ash_total]
+colors = ['orange', 'red', 'magenta']
+
+# Create the bar chart
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.bar(wall_types, total_energy, color=colors)
+
+# Labels and title
+ax.set_xlabel('Wall Type')
+ax.set_ylabel('Total Energy Load (kWh)')
+ax.set_title('Total Energy Load for the Year by Wall Type')
+
+# Show the plot
+plt.show()
+
+
+-----
+
+df10['Day'] = np.arange(len(df10)) // 24  # Group by days
+daily_avg = df10.groupby('Day').mean()
+
+fig, ax = plt.subplots(figsize=(12, 6))
+ax.plot(daily_avg.index, daily_avg['Outside Temp'], label='Outside Temperature', color='blue')
+ax.plot(daily_avg.index, daily_avg['Inside control temp'], label='Brick Wall Inside Temperature', color='black')
+ax.plot(daily_avg.index, daily_avg['Inside rice temp'], label='Rice Cork Inside Temperature', color='red')
+ax.plot(daily_avg.index, daily_avg['Inside sugarcane temp'], label='Bagasse Ash Inside Temperature', color='green')
+
+ax.set_xlabel('Day of the Year')
+ax.set_ylabel('Temperature (°C)')
+ax.set_title('Temperature Variation Throughout the Year')
+ax.legend()
+plt.grid(True, color='gray', linestyle='--', linewidth=0.5)
+plt.show()
